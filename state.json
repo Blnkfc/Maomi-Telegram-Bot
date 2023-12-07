@@ -1,0 +1,70 @@
+{
+  "menu": {
+    "regular": [
+      {
+        "name": "Classic milk tea",
+        "link": "https://i.imgur.com/pc5Jgq3.jpg",
+        "order": ""
+      },
+      {
+        "name": "Coco milk",
+        "link": "https://i.imgur.com/eu7nVlh.jpg",
+        "order": ""
+      },
+      {
+        "name": "Taro milk",
+        "link": "https://i.imgur.com/4ZbsYBa.jpg",
+        "order": ""
+      },
+      {
+        "name": "Matcha milk",
+        "link": "https://i.imgur.com/QQoyChB.jpg",
+        "order": ""
+      },
+      {
+        "name": "Brown sugar milk tea",
+        "link": "https://i.imgur.com/3fGIflR.jpg",
+        "order": ""
+      },
+      {
+        "name": "Brown sugar late",
+        "link": "https://i.imgur.com/PlvG5Zv.jpg",
+        "order": ""
+      },
+      {
+        "name": "Sea salt late",
+        "link": "https://i.imgur.com/nRSkZ0f.jpg",
+        "order": ""
+      }
+    ],
+    "ice_bubble": [
+        {
+          "name": "Melon - Strawberry",
+          "link": "https://i.imgur.com/EeJrZpN.jpg"
+        },
+        {
+          "name": "Blueberry - Peach",
+          "link": "https://i.imgur.com/oIKvWn4.jpg"
+        },
+        {
+          "name": "Lychee - Lychee",
+          "link": "https://i.imgur.com/otW2ULn.jpg"
+        },
+        {
+          "name": "Passion fruit - Passion fruit",
+          "link": "https://i.imgur.com/9Yn2pfw.jpg"
+        },
+        {
+          "name": "Mango - Tropical jolly",
+          "link": "https://i.imgur.com/EueGA8q.jpg"
+        },
+        {
+          "name": "Lychee - ALoe",
+          "link": "https://i.imgur.com/DX6nrfT.jpg"
+        }
+      ],
+    "special": {
+
+    }
+  }
+}

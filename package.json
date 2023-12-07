@@ -1,0 +1,17 @@
+{
+  "name": "maomi_bubble_caffe_telegram_bot",
+  "version": "1.0.0",
+  "description": "informational bot ",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.64.0",
+    "nodemon": "^3.0.2",
+    "openai": "^4.20.1"
+  }
+}
