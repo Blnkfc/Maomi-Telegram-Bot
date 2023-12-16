@@ -16,11 +16,16 @@ const menuOptions = {
     reply_markup: JSON.stringify(
         {
             resize_keyboard: true,
-            keyboard: [[
+            keyboard: [
+                [
                 {text: 'Get hot drinks'},
                 {text: 'Get cold drinks'},
                 {text: 'Get special drinks'}
-            ]]
+            ],
+            [
+                {text: 'Get schedule'}
+            ]
+            ]
     })
 }
 const menuOptionsMedia = [
@@ -43,8 +48,35 @@ const menuOptionsMedia = [
                     '\n\t\t * — 🥛 Milk 🥛* \\- Choose between regular and lactose\\-free milk\\.',
         parse_mode: 'MarkdownV2'
     }
-
 ]
+const scheduleMediaOpen = [
+    {
+        type: 'photo',
+        media: 'https://i.imgur.com/VI0MujW.jpg?1'
+    }
+]
+const scheduleMediaClosed= [
+    {
+        type: 'photo',
+        media: 'https://i.imgur.com/leTo72y.jpg?1'
+    }
+]
+const currentDate = new Date();
+
+const lowerThreshold = new Date(currentDate);
+lowerThreshold.setHours(11, 0, 0, 0);
+
+const upperThreshold = new Date(currentDate);
+upperThreshold.setHours(20, 30, 0, 0);
+
+const checkSchedule = () => {
+    const date = new Date();
+    if(date>lowerThreshold && date<upperThreshold){
+        return scheduleMediaOpen
+    }else
+        return scheduleMediaClosed
+}
+
 
 /*  Keyboard markup for the hot drinks  */
 const hotDrinksList = data.menu.regular
@@ -102,13 +134,28 @@ const coldDrinksMedia = coldDrinksList.map((drink, index) => {
 })
 
 /*  Keyboard markup for all drinks  */
+const specialDrinksList = data.menu.special
+const specialDrinksMedia = specialDrinksList.map((drink, index) => {
+    return{
+        type: 'photo', media: drink.link,
+        caption: index===0?'* Special winter menu: *\n' +
+            '\n\t\t — 🟪🟪Taro Late \\(HOT🔥\\/ COLD❄️\\) \\- Taro powder mixed with late\\.' +
+            '\n\t\t — 🟫⬜️Spicy Late \\(HOT🔥\\/ COLD❄️\\) \\- Spicy syrup with cinnamon and chilly mixed with late\\. ' +
+            '\n\t\t — 🟧⬜️Asam Gingerbread \\(HOT🔥\\/ COLD❄️\\) \\- Asam tea with Gingerbread syrup and tapioca\\.' +
+            '\n\t\t — 🟫🟫Bubble Cacao \\(HOT🔥\\/ COLD❄️\\) \\- Chocolaty cacao with tapioca\\. ':'',
+        parse_mode: 'MarkdownV2'
+    }
+})
+const specialDrinksMenu = specialDrinksList.map((drink) => {
+    return{text: drink.name}
+})
 const specialDrinks = {
     reply_markup: JSON.stringify(
         {
             resize_keyboard: true,
             keyboard:[
+                    specialDrinksMenu.slice(0, 3),
                 [
-                    {text: `Fruity Ice Bubble`},
                     {text: `Return to the menu`}
                 ]
             ]}
@@ -122,9 +169,23 @@ const commandsList = commands.map(com => {
 })
 
 
+
 bot.on('message', async (msg) =>{
     const chatId = msg.chat.id;
     const messageText = msg.text;
+
+    const sendHotDrink = async (index) => {
+        const hotDrink = hotDrinksList[index];
+        await bot.sendPhoto(chatId, hotDrink.link, {
+            reply_markup: JSON.stringify({
+                inline_keyboard: [
+                    [{ text: JSON.stringify(hotDrink.name) , url: hotDrink.order }],
+                ],
+            }),
+        });
+    };
+
+
     switch (msg.text){
         case "/start": {
             await bot.sendMessage(chatId, `Welcome to Maomi Bubble Cafe bot, /help for commands list.`);
@@ -144,6 +205,11 @@ bot.on('message', async (msg) =>{
             await bot.sendMediaGroup(chatId, menuOptionsMedia)
             break
         }
+        case "Get schedule": {
+            await bot.sendMessage(chatId, "Schedule:")
+            await bot.sendMediaGroup(chatId, checkSchedule())
+            break
+        }
         case "Get hot drinks":{
             await bot.sendMessage(chatId,"Here are hot drinks available:", hotDrinks)
             await bot.sendMediaGroup(chatId, hotDrinksMedia)
@@ -155,9 +221,39 @@ bot.on('message', async (msg) =>{
             break
         }
         case "Get special drinks":{
-            await bot.sendMessage(chatId, "Special drinks:", allDrinks)
+            await bot.sendMessage(chatId, "Special drinks:", specialDrinks)
+            await bot.sendMediaGroup(chatId, specialDrinksMedia)
             break
         }
+        case hotDrinksList[0].name: {
+            await sendHotDrink(0);
+            break;
+        }
+        case hotDrinksList[1].name: {
+            await sendHotDrink(1);
+            break;
+        }
+        case hotDrinksList[2].name: {
+            await sendHotDrink(2);
+            break;
+        }
+        case hotDrinksList[3].name: {
+            await sendHotDrink(3);
+            break;
+        }
+        case hotDrinksList[4].name: {
+            await sendHotDrink(4);
+            break;
+        }
+        case hotDrinksList[5].name: {
+            await sendHotDrink(5);
+            break;
+        }
+        case hotDrinksList[6].name: {
+            await sendHotDrink(6);
+            break;
+        }
+
         default:{
             await bot.sendMessage(chatId, "I dont understand you.")
         }
